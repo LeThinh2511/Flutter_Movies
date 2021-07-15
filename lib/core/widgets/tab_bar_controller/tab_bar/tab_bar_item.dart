@@ -19,48 +19,43 @@ class TabBarItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        BlocBuilder<TabBarBloc, TabBarState>(
-          buildWhen: (_, state) {
-            if (state is TabBarIndexChange) {
-              return state.from != state.to && (state.from == index || state.to == index);
+    return InkWell(
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      onTap: onPressed,
+      child: BlocBuilder<TabBarBloc, TabBarState>(
+        buildWhen: (_, state) {
+          if (state is TabBarIndexChange) {
+            return state.from != state.to && (state.from == index || state.to == index);
+          }
+          return false;
+        },
+        builder: (_, state) {
+          Image icon = data.inactiveIcon;
+          Color color = data.inactiveColor;
+          if (state is TabBarIndexChange) {
+            if (state.to == index) {
+              icon = data.activeIcon;
+              color = data.activeColor;
             }
-            return false;
-          },
-          builder: (_, state) {
-            Image icon = data.inactiveIcon;
-            Color color = data.inactiveColor;
-            if (state is TabBarIndexChange) {
-              if (state.to == index) {
-                icon = data.activeIcon;
-                color = data.activeColor;
-              }
-            }
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                icon,
-                Text(
-                  data.title,
-                  style: TextStyle(
-                    fontFamily: Util.fontFamily,
-                    fontSize: 12,
-                    fontWeight: FontWeight.normal,
-                    color: color,
-                  ),
+          }
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              icon,
+              Text(
+                data.title,
+                style: TextStyle(
+                  fontFamily: Util.fontFamily,
+                  fontSize: 12,
+                  fontWeight: FontWeight.normal,
+                  color: color,
                 ),
-              ],
-            );
-          },
-        ),
-        MaterialButton(
-          onPressed: onPressed,
-          highlightColor: Colors.transparent,
-          splashColor: Colors.transparent,
-        )
-      ],
+              )
+            ],
+          );
+        },
+      ),
     );
   }
 }

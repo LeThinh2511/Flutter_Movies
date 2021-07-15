@@ -19,24 +19,44 @@ class NavigationBar extends StatelessWidget {
   final Widget? titleWidget;
   final Widget? rightWidget;
 
-  @override
-  Widget build(BuildContext context) {
+  Widget setupContent({ required Widget child, Color backgroundColor = Colors.white }) {
     return SafeArea(
-      child: SizedBox(
-        height: 44,
-        child: Stack(
-          alignment: AlignmentDirectional.center,
+      child: Scaffold(
+        backgroundColor: backgroundColor,
+        body: Column(
           children: [
-            Row(
-              children: [
-                _buildLeftComponents(),
-                Expanded(child: Container()),
-                _buildRightComponents(),
-              ],
-            ),
-            _buildTitleComponents()
+            this,
+            Expanded(child: child),
           ],
         ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(color: Colors.white, boxShadow: [
+        BoxShadow(
+          color: Colors.black12,
+          offset: Offset(0, 5),
+          blurRadius: 4,
+          spreadRadius: 0,
+        )
+      ]),
+      height: 44,
+      child: Stack(
+        alignment: AlignmentDirectional.center,
+        children: [
+          Row(
+            children: [
+              _buildLeftComponents(),
+              Expanded(child: Container()),
+              _buildRightComponents(),
+            ],
+          ),
+          _buildTitleComponents()
+        ],
       ),
     );
   }

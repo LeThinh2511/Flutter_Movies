@@ -16,15 +16,15 @@ class TabBarController extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SafeArea(child: Scaffold(
         body: Column(
-      children: [
-        Expanded(
-          child: _buildPage(),
-        ),
-        _buildTabBar(context),
-      ],
-    ));
+          children: [
+            Expanded(
+              child: _buildPage(),
+            ),
+            _buildTabBar(context),
+          ],
+        )));
   }
 
   AppTabBar _buildTabBar(BuildContext context) {
